@@ -1,0 +1,50 @@
+{
+  "name": "prophecy",
+  "displayName": "prophecy",
+  "description": "Este projeto é uma extensão para o Visual Studio Code que facilita a criação de testes unitários em arquivos TypeScript para projetos Angular. Com um atalho de teclado ou clique com o botão direito, a extensão verifica se o arquivo de teste .spec.ts já existe e, caso contrário, gera um novo com uma estrutura inicial pronta. A ferramenta é projetada para agilizar o fluxo de trabalho, mantendo a padronização dos testes e economizando tempo.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.generateTest",
+        "title": "Generate Test"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "extension.generateTest",
+          "when": "resourceExtname == .ts",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.94.0",
+    "@types/mocha": "^10.0.9",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "eslint": "^9.13.0",
+    "typescript": "^5.6.3",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
+  }
+}
