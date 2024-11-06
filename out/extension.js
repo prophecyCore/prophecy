@@ -36,7 +36,7 @@ async function activate(context) {
             const fileName = path.basename(filePath, '.ts');
             const testFilePath = filePath.replace(/\.ts$/, '.spec.ts');
             const analysisResult = await (0, resolve_dependecies_1.analyzeFile)(filePath);
-            const testTemplate = generateTestTemplate("EpisodeComponent", analysisResult); // Ajustado para "EpisodeComponent"
+            const testTemplate = generateTestTemplate(analysisResult, fileName); // Ajustado para "EpisodeComponent"
             console.log("Test Template Generated:\n", testTemplate);
             fs.writeFileSync(testFilePath, testTemplate);
             if (!fs.existsSync(testFilePath)) {
@@ -49,17 +49,11 @@ async function activate(context) {
     });
     context.subscriptions.push(disposable);
 }
-function generateTestTemplate(className, analysisResult) {
-    console.log("analysisResult:", analysisResult);
-    const { dependencies = {}, methodsUsed = {}, imports = [] } = analysisResult;
-    console.log("Dependencies:", dependencies);
-    console.log("Methods Used:", methodsUsed);
-    console.log("Imports:", imports);
-    // Geração dos mocks de dependências
+function generateTestTemplate(analysisResult, fileName) {
+    const { className, dependencies = {}, methodsUsed = {}, imports = [] } = analysisResult;
     const dependencyMocks = Object.entries(dependencies)
-        .map(([alias, dep]) => `let ${alias}: jasmine.SpyObj<${dep}>;`)
+        .map(([alias, dep]) => `let ${alias}: ${dep};`)
         .join('\n\t');
-    // Tratamento para assignments de dependências
     const dependencyAssignments = Object.entries(dependencies)
         .map(([alias, dep]) => {
         const methods = methodsUsed[dep] || [];
@@ -68,13 +62,12 @@ function generateTestTemplate(className, analysisResult) {
     })
         .filter(Boolean)
         .join(',\n\t\t\t\t');
-    // Argumentos do construtor com alias das dependências
     const importStatements = imports
-        .map((imp) => `import { ${imp} } from './${imp.toLowerCase()}.ts';`)
+        .map((imp) => `import { ${imp.split(' from ')[0]} } from ${imp.split(' from ')[1]};`)
         .join('\n');
     return `${importStatements}
 import { TestBed } from '@angular/core/testing';
-import { ${className} } from './episode.component';  // Ajustado para rota
+import { ${className} } from './${fileName}';  // Importação dinâmica
 
 describe('${className} Tests', () => {
 	${dependencyMocks}
@@ -87,7 +80,6 @@ describe('${className} Tests', () => {
 			]
 		});
 
-		// Inject dependencies
 		${Object.keys(dependencies)
         .map(alias => `${alias} = TestBed.inject(${dependencies[alias]});`)
         .join('\n\t\t')}

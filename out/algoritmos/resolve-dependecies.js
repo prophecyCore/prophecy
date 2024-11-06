@@ -25,16 +25,22 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.analyzeFile = analyzeFile;
 const fs = __importStar(require("fs/promises"));
-// Função para extrair dependências do construtor e as importações
 function extractDependencies(fileContent) {
     const constructorRegex = /constructor\s*\((.*?)\)\s*{/s;
     const paramRegex = /private\s+(\w+):\s+(\w+)/g;
-    const importRegex = /import\s+\{?(\w+(?:\s*,\s*\w+)*)\}?\s+from\s+['"]([^'"]+)['"]/g;
+    const importRegex = /import\s+\{?\s*([\w\s,{}]+)\s*\}?\s+from\s+['"]([^'"]+)['"]/g;
+    const classRegex = /export\s+class\s+(\w+)/;
     const dependencies = {};
     const imports = [];
-    const constructorMatch = fileContent.match(constructorRegex);
-    // Extraindo dependências do construtor
+    let className = 'UnknownClass';
     let match;
+    // Extraindo o nome da classe
+    const classMatch = fileContent.match(classRegex);
+    if (classMatch) {
+        className = classMatch[1];
+    }
+    // Extraindo dependências do construtor
+    const constructorMatch = fileContent.match(constructorRegex);
     if (constructorMatch) {
         const params = constructorMatch[1];
         while ((match = paramRegex.exec(params)) !== null) {
@@ -43,12 +49,18 @@ function extractDependencies(fileContent) {
             dependencies[alias] = type;
         }
     }
-    // Extraindo as importações
+    // Extraindo as importações e formatando-as corretamente
     while ((match = importRegex.exec(fileContent)) !== null) {
-        const importedItems = match[1].split(',').map((item) => item.trim());
-        imports.push(...importedItems.map((item) => `${item} from '${match[2]}'`));
+        const importedItems = match[1].replace(/[{}]/g, '').split(',').map((item) => item.trim());
+        const fromPath = match[2];
+        // Filtrando apenas as dependências que estão no construtor
+        importedItems.forEach((item) => {
+            if (Object.values(dependencies).includes(item)) {
+                imports.push(`${item} from '${fromPath}'`);
+            }
+        });
     }
-    return { dependencies, imports };
+    return { dependencies, imports, className };
 }
 // Função para encontrar e armazenar a cadeia completa dos métodos usados
 function findMethodsUsed(fileContent, dependencies) {
@@ -59,13 +71,13 @@ function findMethodsUsed(fileContent, dependencies) {
         methodsUsed[type] = [];
         let match;
         while ((match = methodRegex.exec(fileContent)) !== null) {
-            const fullPath = match[1]; // Caminho completo do método, ex.: 'params.subscribe'
+            const fullPath = match[1];
             const pathParts = fullPath.split('.');
-            const isTerminal = true; // Marcamos todas as chamadas como terminais (todas devem ser mockadas)
+            const isTerminal = true;
             methodsUsed[type].push({
-                fullPath, // Mantém a cadeia completa, ex.: 'params.subscribe'
-                isTerminal, // Indica que é parte da chamada a ser mockada
-                type: 'any' // Placeholder para tipo, se precisar mapear mais tarde
+                fullPath,
+                isTerminal,
+                type: 'any'
             });
         }
     });
@@ -74,19 +86,16 @@ function findMethodsUsed(fileContent, dependencies) {
 // Função principal para análise do arquivo
 async function analyzeFile(filePath) {
     const fileContent = await fs.readFile(filePath, 'utf-8');
-    const { dependencies, imports } = extractDependencies(fileContent);
+    const { dependencies, imports, className } = extractDependencies(fileContent);
     console.log("Dependências encontradas:", dependencies);
+    console.log("Nome da classe:", className);
     const methodsUsed = findMethodsUsed(fileContent, dependencies);
     console.log("Métodos usados por dependência:", methodsUsed);
     return {
-        dependencies: dependencies, // Mantemos como um objeto para alias e tipos
+        dependencies,
         methodsUsed,
-        imports // Incluímos as importações
+        imports,
+        className
     };
 }
-// Exemplo de uso
-// const filePath = './seu-arquivo.ts';
-// analyzeFile(filePath)
-// 	.then((result) => console.log("Análise concluída:", result))
-// 	.catch((err) => console.error("Erro ao analisar o arquivo:", err));
 //# sourceMappingURL=resolve-dependecies.js.map

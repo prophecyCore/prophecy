@@ -10,9 +10,10 @@ interface MethodDetail {
 }
 
 interface AnalysisResult {
-  dependencies: Record<string, string>;
-  methodsUsed: Record<string, MethodDetail[]>;
-  imports: string[];
+	dependencies: Record<string, string>;
+	methodsUsed: Record<string, MethodDetail[]>;
+	imports: string[];
+	className: string;  // Adicionamos para armazenar o nome da classe
 }
 
 export async function activate(context: vscode.ExtensionContext) {
@@ -24,7 +25,7 @@ export async function activate(context: vscode.ExtensionContext) {
 			const testFilePath = filePath.replace(/\.ts$/, '.spec.ts');
 
 			const analysisResult: AnalysisResult = await analyzeFile(filePath);
-			const testTemplate = generateTestTemplate("EpisodeComponent", analysisResult);  // Ajustado para "EpisodeComponent"
+			const testTemplate = generateTestTemplate(analysisResult, fileName);  // Ajustado para "EpisodeComponent"
 
 			console.log("Test Template Generated:\n", testTemplate);
 
@@ -40,38 +41,29 @@ export async function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable);
 }
 
-function generateTestTemplate(className: string, analysisResult: AnalysisResult): string {
-	console.log("analysisResult:", analysisResult);
+function generateTestTemplate(analysisResult: AnalysisResult, fileName: string): string {
+	const { className, dependencies = {}, methodsUsed = {}, imports = [] } = analysisResult;
 
-	const { dependencies = {}, methodsUsed = {}, imports = [] } = analysisResult;
-
-	console.log("Dependencies:", dependencies);
-	console.log("Methods Used:", methodsUsed);
-	console.log("Imports:", imports);
-
-	// Geração dos mocks de dependências
 	const dependencyMocks = Object.entries(dependencies)
-		.map(([alias, dep]) => `let ${alias}: jasmine.SpyObj<${dep}>;`)
+		.map(([alias, dep]) => `let ${alias}: ${dep};`)
 		.join('\n\t');
 
-	// Tratamento para assignments de dependências
 	const dependencyAssignments = Object.entries(dependencies)
 		.map(([alias, dep]) => {
 			const methods = methodsUsed[dep] || [];
-			const methodsList = methods.map((method) => `'${method.fullPath.split('.').pop()}'`).join(', ');
+			const methodsList = methods.map((method: any) => `'${method.fullPath.split('.').pop()}'`).join(', ');
 			return `{ provide: ${dep}, useValue: jasmine.createSpyObj('${alias}', [${methodsList}]) }`;
 		})
 		.filter(Boolean)
 		.join(',\n\t\t\t\t');
 
-	// Argumentos do construtor com alias das dependências
 	const importStatements = imports
-		.map((imp) => `import { ${imp} } from './${imp.toLowerCase()}.ts';`)
+		.map((imp:string) => `import { ${imp.split(' from ')[0]} } from ${imp.split(' from ')[1]};`)
 		.join('\n');
 
 	return `${importStatements}
 import { TestBed } from '@angular/core/testing';
-import { ${className} } from './episode.component';  // Ajustado para rota
+import { ${className} } from './${fileName}';  // Importação dinâmica
 
 describe('${className} Tests', () => {
 	${dependencyMocks}
@@ -84,7 +76,6 @@ describe('${className} Tests', () => {
 			]
 		});
 
-		// Inject dependencies
 		${Object.keys(dependencies)
 			.map(alias => `${alias} = TestBed.inject(${dependencies[alias]});`)
 			.join('\n\t\t')}
@@ -96,5 +87,5 @@ describe('${className} Tests', () => {
 		expect(component).toBeTruthy();
 	});
 });
-`;
+`
 }
