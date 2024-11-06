@@ -1,71 +1,81 @@
-# prophecy README
+# Profecia - Extensão para Gerar Testes Unitários Angular
 
-This is the README for your extension "prophecy". After writing up a brief description, we recommend including the following sections.
+**Profecia** é uma extensão para o Visual Studio Code que ajuda na geração automática de testes unitários no Angular, com Karma e Jasmine. Ela resolve e mocka automaticamente as dependências e variáveis necessárias, facilitando o processo de criação e execução de testes.
 
-## Features
+[![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/seu-usuario/profecia/releases)
+[![License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/seu-usuario/profecia/ci.yml?branch=main)](https://github.com/seu-usuario/profecia/actions)
+[![Coverage](https://img.shields.io/codecov/c/github/seu-usuario/profecia?branch=main)](https://codecov.io/gh/seu-usuario/profecia)
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Pré-Requisitos
 
-For example if there is an image subfolder under your extension project workspace:
+- **Node.js** (recomendado a versão LTS): [Baixe aqui](https://nodejs.org/)
+- **Angular CLI** (se você ainda não tiver o Angular instalado): [Instruções de instalação](https://angular.io/cli)
+- **VS Code**: [Baixe aqui](https://code.visualstudio.com/)
 
-\!\[feature X\]\(images/feature-x.png\)
+## Como Instalar
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+1. **Baixe o repositório**:
+   Se você deseja usar a extensão localmente antes de instalar diretamente do marketplace, siga os seguintes passos:
 
-## Requirements
+   - Clone ou baixe o repositório:
+   ```bash
+   git clone https://github.com/pedroHenriqueMaia/prophecy.git
+   ```
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+2. **Instalar dependências**:
+   Navegue até a pasta do projeto e instale as dependências com o comando:
+   ```bash
+   npm install
+   ```
 
-## Extension Settings
+3. **Abrir no VS Code**:
+   Abra a pasta do projeto no VS Code:
+   ```bash
+   code .
+   ```
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+4. **Iniciar a Extensão**:
+   No VS Code, pressione `F5` para compilar a extensão e iniciar o modo de desenvolvimento. Isso abrirá uma nova janela do VS Code com a sua extensão carregada.
 
-For example:
+5. **Instalar via Marketplace**:
+   Caso você queira disponibilizar a extensão para outras pessoas via **VS Code Marketplace**, basta buscar por "Profecia" diretamente no marketplace do VS Code e clicar em **Instalar**.
 
-This extension contributes the following settings:
+## Como Usar
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+Após a instalação, a extensão estará pronta para uso. Para gerar os testes unitários no seu projeto Angular, siga estas etapas:
 
-## Known Issues
+1. **Comando Profecia**:
+   - No **Command Palette** (Ctrl+Shift+P), busque por **Profecia: Gerar Testes Unitários**.
+   - A extensão automaticamente irá configurar os mocks, gerar testes e configurar as dependências para o seu projeto Angular.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Como Contribuir
 
-## Release Notes
+Se você deseja contribuir para o desenvolvimento da extensão **Profecia**, siga estas etapas:
 
-Users appreciate release notes as you update your extension.
+1. **Fork o repositório**.
+2. **Crie uma branch** para suas alterações (`git checkout -b feature/alteracao`).
+3. Faça as alterações desejadas.
+4. **Teste as mudanças** localmente.
+5. Envie um pull request com suas melhorias.
 
-### 1.0.0
+Para mais detalhes sobre como contribuir, consulte o [Guia de Contribuição](CONTRIBUTING.md).
 
-Initial release of ...
+## Licença
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Este projeto é licenciado sob a [MIT License](LICENSE).
 
 ---
 
-## Following extension guidelines
+### Notas Adicionais
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+Se você encontrar algum problema, por favor, abra uma **issue** ou **pull request**. Agradecemos por contribuir com o **Profecia**!
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+---
 
-## Working with Markdown
+**Badges Explicativas:**
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+- **Versão**: Mostra a versão atual do projeto.
+- **Licença**: Exibe a licença que o projeto segue (MIT).
+- **Status da Build**: Status atual da CI (integração contínua), mostrando se a build está passando.
+- **Cobertura de Testes**: Mostra a porcentagem de cobertura de testes do código, com um link para a plataforma de cobertura.
