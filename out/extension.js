@@ -40,10 +40,10 @@ async function activate(context) {
             console.log("Test Template Generated:\n", testTemplate);
             fs.writeFileSync(testFilePath, testTemplate);
             if (!fs.existsSync(testFilePath)) {
-                vscode.window.showInformationMessage(`Test file created: ${testFilePath}`);
+                vscode.window.showInformationMessage(`✨ The prophecy is fulfilled! A new test file has been crafted: ${testFilePath}`);
             }
             else {
-                vscode.window.showWarningMessage(`Test file updated: ${testFilePath}`);
+                vscode.window.showWarningMessage(`🔄 The prophecy endures: Existing test file renewed at ${testFilePath}`);
             }
         }
     });

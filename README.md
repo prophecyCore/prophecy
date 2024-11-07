@@ -59,7 +59,6 @@ Se você deseja contribuir para o desenvolvimento da extensão **Profecia**, sig
 4. **Teste as mudanças** localmente.
 5. Envie um pull request com suas melhorias.
 
-Para mais detalhes sobre como contribuir, consulte o [Guia de Contribuição](CONTRIBUTING.md).
 
 ## Licença
 

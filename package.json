@@ -6,22 +6,27 @@
   "engines": {
     "vscode": "^1.94.0"
   },
+  "publisher": "prophecyCore",
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prophecyCore/prophecy.git"
+  },
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "extension.generateTest",
-        "title": "Generate Test"
+        "command": "extension.createUnitTestWithProphecy",
+        "title": "Create Unit Test with Prophecy"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "extension.generateTest",
+          "command": "extension.createUnitTestWithProphecy",
           "when": "resourceExtname == .ts",
           "group": "navigation"
         }
