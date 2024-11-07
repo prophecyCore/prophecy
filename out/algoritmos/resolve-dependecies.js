@@ -34,26 +34,22 @@ function extractDependencies(fileContent) {
     const imports = [];
     let className = 'UnknownClass';
     let match;
-    // Extraindo o nome da classe
     const classMatch = fileContent.match(classRegex);
     if (classMatch) {
         className = classMatch[1];
     }
-    // Extraindo dependências do construtor
     const constructorMatch = fileContent.match(constructorRegex);
     if (constructorMatch) {
         const params = constructorMatch[1];
         while ((match = paramRegex.exec(params)) !== null) {
-            const alias = match[1]; // Ex.: 'route'
-            const type = match[2]; // Ex.: 'ActivatedRoute'
+            const alias = match[1];
+            const type = match[2];
             dependencies[alias] = type;
         }
     }
-    // Extraindo as importações e formatando-as corretamente
     while ((match = importRegex.exec(fileContent)) !== null) {
         const importedItems = match[1].replace(/[{}]/g, '').split(',').map((item) => item.trim());
         const fromPath = match[2];
-        // Filtrando apenas as dependências que estão no construtor
         importedItems.forEach((item) => {
             if (Object.values(dependencies).includes(item)) {
                 imports.push(`${item} from '${fromPath}'`);
@@ -62,7 +58,6 @@ function extractDependencies(fileContent) {
     }
     return { dependencies, imports, className };
 }
-// Função para encontrar e armazenar a cadeia completa dos métodos usados
 function findMethodsUsed(fileContent, dependencies) {
     const methodsUsed = {};
     Object.keys(dependencies).forEach((alias) => {
@@ -73,24 +68,20 @@ function findMethodsUsed(fileContent, dependencies) {
         while ((match = methodRegex.exec(fileContent)) !== null) {
             const fullPath = match[1];
             const pathParts = fullPath.split('.');
-            const isTerminal = true;
+            const isTerminal = pathParts.length === 1;
             methodsUsed[type].push({
                 fullPath,
                 isTerminal,
-                type: 'any'
+                type: isTerminal ? 'any' : 'Observable<any>'
             });
         }
     });
     return methodsUsed;
 }
-// Função principal para análise do arquivo
 async function analyzeFile(filePath) {
     const fileContent = await fs.readFile(filePath, 'utf-8');
     const { dependencies, imports, className } = extractDependencies(fileContent);
-    console.log("Dependências encontradas:", dependencies);
-    console.log("Nome da classe:", className);
     const methodsUsed = findMethodsUsed(fileContent, dependencies);
-    console.log("Métodos usados por dependência:", methodsUsed);
     return {
         dependencies,
         methodsUsed,

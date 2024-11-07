@@ -36,7 +36,7 @@ async function activate(context) {
             const fileName = path.basename(filePath, '.ts');
             const testFilePath = filePath.replace(/\.ts$/, '.spec.ts');
             const analysisResult = await (0, resolve_dependecies_1.analyzeFile)(filePath);
-            const testTemplate = generateTestTemplate(analysisResult, fileName); // Ajustado para "EpisodeComponent"
+            const testTemplate = generateTestTemplate(analysisResult, fileName);
             console.log("Test Template Generated:\n", testTemplate);
             fs.writeFileSync(testFilePath, testTemplate);
             if (!fs.existsSync(testFilePath)) {
@@ -49,16 +49,52 @@ async function activate(context) {
     });
     context.subscriptions.push(disposable);
 }
+function objectToString(obj) {
+    return `{ ${Object.entries(obj)
+        .map(([key, value]) => {
+        if (typeof value === 'object') {
+            return `${key}: ${objectToString(value)}`;
+        }
+        return `${key}: ${value}`;
+    })
+        .join(', ')} }`;
+}
+function createNestedMock(methodPath, isObservable) {
+    const levels = methodPath.split('.');
+    let mock = {};
+    let current = mock;
+    for (let i = 0; i < levels.length; i++) {
+        const level = levels[i];
+        if (i === levels.length - 1) {
+            current[level] = isObservable ? '() => of()' : '() => {}';
+        }
+        else {
+            current[level] = {};
+            current = current[level];
+        }
+    }
+    return mock;
+}
 function generateTestTemplate(analysisResult, fileName) {
-    const { className, dependencies = {}, methodsUsed = {}, imports = [] } = analysisResult;
+    const { className, dependencies, methodsUsed, imports } = analysisResult;
     const dependencyMocks = Object.entries(dependencies)
         .map(([alias, dep]) => `let ${alias}: ${dep};`)
         .join('\n\t');
     const dependencyAssignments = Object.entries(dependencies)
         .map(([alias, dep]) => {
         const methods = methodsUsed[dep] || [];
-        const methodsList = methods.map((method) => `'${method.fullPath.split('.').pop()}'`).join(', ');
-        return `{ provide: ${dep}, useValue: jasmine.createSpyObj('${alias}', [${methodsList}]) }`;
+        const requiresComplexMock = methods.some(method => method.fullPath.includes('.'));
+        if (requiresComplexMock) {
+            const mockProperties = methods.map(method => {
+                const methodMock = createNestedMock(method.fullPath, method.type === 'Observable');
+                return `${objectToString(methodMock)}`;
+            }).join(', ');
+            return `{ provide: ${dep}, useValue: ${mockProperties} }`;
+        }
+        else {
+            const methodsList = methods.map((method) => `'${method.fullPath}'`).join(', ');
+            return `{ provide: ${dep}, useValue: jasmine.createSpyObj('${alias}', [${methodsList}]) }`;
+        }
     })
         .filter(Boolean)
         .join(',\n\t\t\t\t');
@@ -67,29 +103,30 @@ function generateTestTemplate(analysisResult, fileName) {
         .join('\n');
     return `${importStatements}
 import { TestBed } from '@angular/core/testing';
-import { ${className} } from './${fileName}';  // Importação dinâmica
+import { ${className} } from './${fileName}';
 
 describe('${className} Tests', () => {
-	${dependencyMocks}
-	let component: ${className};
+  ${dependencyMocks}
+  let component: ${className};
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			providers: [
-				${dependencyAssignments}
-			]
-		});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        ${className},
+        ${dependencyAssignments}
+      ]
+    });
 
-		${Object.keys(dependencies)
+    ${Object.keys(dependencies)
         .map(alias => `${alias} = TestBed.inject(${dependencies[alias]});`)
         .join('\n\t\t')}
 
-		component = TestBed.inject(${className});
-	});
+    component = TestBed.inject(${className});
+  });
 
-	it('should create an instance', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create an instance', () => {
+    expect(component).toBeTruthy();
+  });
 });
 `;
 }
