@@ -28,7 +28,7 @@
 
    **Example**:
    - Original file: `src/app/example.ts`
-   - Generated test: `src/app/example.test.ts`
+   - Generated test: `src/app/example.spec.ts`
 
 ---
 
@@ -50,7 +50,7 @@
 
 This is an **open-source** project. If you'd like to contribute, feel free to submit *pull requests* or report issues.
 
-**Repository link**: [https://github.com/prophecyCore/prophecy](https://github.com/prophecyCore/prophecy)
+**Repository link**: [https://github.com/prophecyCore](https://github.com/prophecyCore)
 
 If you find a bug or have suggestions for improvements, feel free to open an **issue** on our GitHub repository.
 
@@ -64,4 +64,4 @@ Distributed under the MIT License. See the [LICENSE](LICENSE) file for more deta
 
 ## Open Source Badge
 
-[![Open Source](https://img.shields.io/badge/Open%20Source-%F0%9F%93%96%20prophecyCore%2Fprophecy-green)](https://github.com/prophecyCore/prophecy)
+[![Open Source](https://img.shields.io/badge/Open%20Source-%F0%9F%93%96%20prophecyCore%2Fprophecy-green)](https://github.com/prophecyCore)

@@ -2,7 +2,7 @@
   "name": "prophecy",
   "displayName": "prophecy",
   "description": "This project is an extension for Visual Studio Code that streamlines the creation of unit tests for TypeScript files in Angular projects. With a keyboard shortcut or right-click, the extension checks if the `.spec.ts` test file already exists, and if not, it generates a new one with a ready-to-use initial structure. The tool is designed to enhance workflow efficiency, maintain test standardization, and save time.",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "engines": {
     "vscode": "^1.94.0"
   },
