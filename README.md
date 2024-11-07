@@ -1,73 +1,67 @@
-Para criar um README intuitivo para os usuários, com instruções claras sobre como usar a extensão e destacando que é um projeto open-source, você pode seguir este formato:
-
----
-
 # Prophecy Extension for Visual Studio Code
 
-![Logo](images/logo.png)
+## What is Prophecy?
 
-## O que é o Prophecy?
-
-O **Prophecy** é uma extensão para o **Visual Studio Code** que facilita a criação de testes unitários para o seu código TypeScript. Com um simples clique com o botão direito, você pode gerar automaticamente testes unitários para os arquivos `.ts` em sua pasta de trabalho.
+**Prophecy** is an extension for **Visual Studio Code** that simplifies the process of creating unit tests for your TypeScript code. With a simple right-click, you can automatically generate unit tests for `.ts` files in your workspace.
 
 ---
 
-## Como Usar
+## How to Use
 
-### Passo 1: Instalar a Extensão
+### Step 1: Install the Extension
 
-1. Acesse o **Visual Studio Code Marketplace**.
-2. Procure por **Prophecy** ou [clique aqui para instalar](https://marketplace.visualstudio.com/items?itemName=prophecyCore.prophecy).
-3. Clique em "Instalar".
+1. Go to the **Visual Studio Code Marketplace**.
+2. Search for **Prophecy** or [click here to install](https://marketplace.visualstudio.com/items?itemName=prophecyCore.prophecy).
+3. Click "Install".
 
 ---
 
-### Passo 2: Gerar Testes Unitários
+### Step 2: Generate Unit Tests
 
-1. Abra um arquivo TypeScript `.ts` no seu projeto.
-2. Clique com o botão direito do mouse sobre o código dentro do arquivo.
-3. No menu de contexto, escolha a opção **"Gerar Teste Unitário com Prophecy"**.
+1. Open a TypeScript `.ts` file in your project.
+2. Right-click on the code inside the file.
+3. In the context menu, select the **"Generate Unit Test with Prophecy"** option.
    
-   ![Clique com o Botão Direito](images/context-menu.png)
+   ![Right-Click](images/context-menu.png)
 
-4. O teste será gerado na mesma pasta onde o arquivo original está localizado.
+4. The test will be generated in the same folder as the original file.
 
-   **Exemplo**:
-   - Arquivo original: `src/app/exemplo.ts`
-   - Teste gerado: `src/app/exemplo.test.ts`
-
----
-
-### Passo 3: Executando os Testes
-
-1. Após a geração do teste, você pode executar os testes utilizando o **Test Runner** do Visual Studio Code ou outra ferramenta de testes de sua preferência (por exemplo, Jest, Mocha).
+   **Example**:
+   - Original file: `src/app/example.ts`
+   - Generated test: `src/app/example.test.ts`
 
 ---
 
-## Funcionalidades
+### Step 3: Run the Tests
 
-- **Geração automática de testes unitários** para funções em arquivos TypeScript.
-- **Criação de arquivos de teste** na mesma pasta do arquivo original.
-- Suporte para **tipagem e integração** com outras ferramentas de testes populares.
+1. After generating the test, you can run the tests using the **Test Runner** in Visual Studio Code or another testing tool of your choice (e.g., Jest, Mocha).
 
 ---
 
-## Contribuições
+## Features
 
-Este é um projeto **open-source**. Se você deseja contribuir, fique à vontade para enviar *pull requests* ou reportar problemas.
-
-**Link do repositório**: [https://github.com/prophecyCore/prophecy](https://github.com/prophecyCore/prophecy)
-
-Se você encontrou algum bug ou tem sugestões para melhorias, sinta-se à vontade para abrir uma **issue** no nosso repositório GitHub.
+- **Automatic generation of unit tests** for functions in TypeScript files.
+- **Creation of test files** in the same folder as the original file.
+- Support for **typing and integration** with popular testing tools.
 
 ---
 
-## Licença
+## Contributing
 
-Distribuído sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+This is an **open-source** project. If you'd like to contribute, feel free to submit *pull requests* or report issues.
+
+**Repository link**: [https://github.com/prophecyCore/prophecy](https://github.com/prophecyCore/prophecy)
+
+If you find a bug or have suggestions for improvements, feel free to open an **issue** on our GitHub repository.
 
 ---
 
-## Badge de Open Source
+## License
+
+Distributed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+## Open Source Badge
 
 [![Open Source](https://img.shields.io/badge/Open%20Source-%F0%9F%93%96%20prophecyCore%2Fprophecy-green)](https://github.com/prophecyCore/prophecy)
