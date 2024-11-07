@@ -90,3 +90,4 @@ export async function analyzeFile(filePath: string): Promise<AnalysisResult> {
     className
   };
 }
+

@@ -89,4 +89,4 @@ async function analyzeFile(filePath) {
         className
     };
 }
-//# sourceMappingURL=resolve-dependecies.js.map
+//# sourceMappingURL=resolve-deps.js.map

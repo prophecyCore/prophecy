@@ -27,15 +27,16 @@ exports.activate = activate;
 const vscode = __importStar(require("vscode"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
-const resolve_dependecies_1 = require("./algoritmos/resolve-dependecies");
+const resolve_deps_1 = require("./resolve-deps");
 async function activate(context) {
-    const disposable = vscode.commands.registerCommand('extension.generateTest', async () => {
+    const disposable = vscode.commands.registerCommand('extension.createUnitTestWithProphecy', async () => {
+        console.log("Comando ativado!");
         const editor = vscode.window.activeTextEditor;
         if (editor) {
             const filePath = editor.document.uri.fsPath;
             const fileName = path.basename(filePath, '.ts');
             const testFilePath = filePath.replace(/\.ts$/, '.spec.ts');
-            const analysisResult = await (0, resolve_dependecies_1.analyzeFile)(filePath);
+            const analysisResult = await (0, resolve_deps_1.analyzeFile)(filePath);
             const testTemplate = generateTestTemplate(analysisResult, fileName);
             console.log("Test Template Generated:\n", testTemplate);
             fs.writeFileSync(testFilePath, testTemplate);

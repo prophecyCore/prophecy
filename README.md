@@ -1,80 +1,73 @@
-# Profecia - Extensão para Gerar Testes Unitários Angular
+Para criar um README intuitivo para os usuários, com instruções claras sobre como usar a extensão e destacando que é um projeto open-source, você pode seguir este formato:
 
-**Profecia** é uma extensão para o Visual Studio Code que ajuda na geração automática de testes unitários no Angular, com Karma e Jasmine. Ela resolve e mocka automaticamente as dependências e variáveis necessárias, facilitando o processo de criação e execução de testes.
+---
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/seu-usuario/profecia/releases)
-[![License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/seu-usuario/profecia/ci.yml?branch=main)](https://github.com/seu-usuario/profecia/actions)
-[![Coverage](https://img.shields.io/codecov/c/github/seu-usuario/profecia?branch=main)](https://codecov.io/gh/seu-usuario/profecia)
+# Prophecy Extension for Visual Studio Code
 
-## Pré-Requisitos
+![Logo](images/logo.png)
 
-- **Node.js** (recomendado a versão LTS): [Baixe aqui](https://nodejs.org/)
-- **Angular CLI** (se você ainda não tiver o Angular instalado): [Instruções de instalação](https://angular.io/cli)
-- **VS Code**: [Baixe aqui](https://code.visualstudio.com/)
+## O que é o Prophecy?
 
-## Como Instalar
+O **Prophecy** é uma extensão para o **Visual Studio Code** que facilita a criação de testes unitários para o seu código TypeScript. Com um simples clique com o botão direito, você pode gerar automaticamente testes unitários para os arquivos `.ts` em sua pasta de trabalho.
 
-1. **Baixe o repositório**:
-   Se você deseja usar a extensão localmente antes de instalar diretamente do marketplace, siga os seguintes passos:
-
-   - Clone ou baixe o repositório:
-   ```bash
-   git clone https://github.com/pedroHenriqueMaia/prophecy.git
-   ```
-
-2. **Instalar dependências**:
-   Navegue até a pasta do projeto e instale as dependências com o comando:
-   ```bash
-   npm install
-   ```
-
-3. **Abrir no VS Code**:
-   Abra a pasta do projeto no VS Code:
-   ```bash
-   code .
-   ```
-
-4. **Iniciar a Extensão**:
-   No VS Code, pressione `F5` para compilar a extensão e iniciar o modo de desenvolvimento. Isso abrirá uma nova janela do VS Code com a sua extensão carregada.
-
-5. **Instalar via Marketplace**:
-   Caso você queira disponibilizar a extensão para outras pessoas via **VS Code Marketplace**, basta buscar por "Profecia" diretamente no marketplace do VS Code e clicar em **Instalar**.
+---
 
 ## Como Usar
 
-Após a instalação, a extensão estará pronta para uso. Para gerar os testes unitários no seu projeto Angular, siga estas etapas:
+### Passo 1: Instalar a Extensão
 
-1. **Comando Profecia**:
-   - No **Command Palette** (Ctrl+Shift+P), busque por **Profecia: Gerar Testes Unitários**.
-   - A extensão automaticamente irá configurar os mocks, gerar testes e configurar as dependências para o seu projeto Angular.
+1. Acesse o **Visual Studio Code Marketplace**.
+2. Procure por **Prophecy** ou [clique aqui para instalar](https://marketplace.visualstudio.com/items?itemName=prophecyCore.prophecy).
+3. Clique em "Instalar".
 
-## Como Contribuir
+---
 
-Se você deseja contribuir para o desenvolvimento da extensão **Profecia**, siga estas etapas:
+### Passo 2: Gerar Testes Unitários
 
-1. **Fork o repositório**.
-2. **Crie uma branch** para suas alterações (`git checkout -b feature/alteracao`).
-3. Faça as alterações desejadas.
-4. **Teste as mudanças** localmente.
-5. Envie um pull request com suas melhorias.
+1. Abra um arquivo TypeScript `.ts` no seu projeto.
+2. Clique com o botão direito do mouse sobre o código dentro do arquivo.
+3. No menu de contexto, escolha a opção **"Gerar Teste Unitário com Prophecy"**.
+   
+   ![Clique com o Botão Direito](images/context-menu.png)
 
+4. O teste será gerado na mesma pasta onde o arquivo original está localizado.
+
+   **Exemplo**:
+   - Arquivo original: `src/app/exemplo.ts`
+   - Teste gerado: `src/app/exemplo.test.ts`
+
+---
+
+### Passo 3: Executando os Testes
+
+1. Após a geração do teste, você pode executar os testes utilizando o **Test Runner** do Visual Studio Code ou outra ferramenta de testes de sua preferência (por exemplo, Jest, Mocha).
+
+---
+
+## Funcionalidades
+
+- **Geração automática de testes unitários** para funções em arquivos TypeScript.
+- **Criação de arquivos de teste** na mesma pasta do arquivo original.
+- Suporte para **tipagem e integração** com outras ferramentas de testes populares.
+
+---
+
+## Contribuições
+
+Este é um projeto **open-source**. Se você deseja contribuir, fique à vontade para enviar *pull requests* ou reportar problemas.
+
+**Link do repositório**: [https://github.com/prophecyCore/prophecy](https://github.com/prophecyCore/prophecy)
+
+Se você encontrou algum bug ou tem sugestões para melhorias, sinta-se à vontade para abrir uma **issue** no nosso repositório GitHub.
+
+---
 
 ## Licença
 
-Este projeto é licenciado sob a [MIT License](LICENSE).
+Distribuído sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ---
 
-### Notas Adicionais
+## Badge de Open Source
 
-Se você encontrar algum problema, por favor, abra uma **issue** ou **pull request**. Agradecemos por contribuir com o **Profecia**!
-
----
-
-**Badges Explicativas:**
-
-- **Versão**: Mostra a versão atual do projeto.
-- **Licença**: Exibe a licença que o projeto segue (MIT).
-- **Status da Build**: Status atual da CI (integração contínua), mostrando se a build está passando.
-- **Cobertura de Testes**: Mostra a porcentagem de cobertura de testes do código, com um link para a plataforma de cobertura.
+[![Open Source](https://img.shields.io/badge/Open%20Source-%F0%9F%93%96%20prophecyCore%2Fprophecy-green)](https://github.com/prophecyCore/prophecy)

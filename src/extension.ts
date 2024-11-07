@@ -1,7 +1,9 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { analyzeFile } from './algoritmos/resolve-dependecies';
+import { analyzeFile } from './resolve-deps';
+
+
 
 interface MethodDetail {
   fullPath: string;
@@ -17,7 +19,9 @@ interface AnalysisResult {
 }
 
 export async function activate(context: vscode.ExtensionContext) {
-  const disposable = vscode.commands.registerCommand('extension.generateTest', async () => {
+  const disposable = vscode.commands.registerCommand('extension.createUnitTestWithProphecy', async () => {
+    console.log("Comando ativado!");
+
     const editor = vscode.window.activeTextEditor;
     if (editor) {
       const filePath = editor.document.uri.fsPath;
@@ -33,15 +37,15 @@ export async function activate(context: vscode.ExtensionContext) {
 
       if (!fs.existsSync(testFilePath)) {
         vscode.window.showInformationMessage(`✨ The prophecy is fulfilled! A new test file has been crafted: ${testFilePath}`);
-
       } else {
         vscode.window.showWarningMessage(`🔄 The prophecy endures: Existing test file renewed at ${testFilePath}`);
-
       }
     }
   });
+
   context.subscriptions.push(disposable);
 }
+
 
 function objectToString(obj: any): string {
   return `{ ${Object.entries(obj)

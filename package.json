@@ -2,18 +2,20 @@
   "name": "prophecy",
   "displayName": "prophecy",
   "description": "Este projeto é uma extensão para o Visual Studio Code que facilita a criação de testes unitários em arquivos TypeScript para projetos Angular. Com um atalho de teclado ou clique com o botão direito, a extensão verifica se o arquivo de teste .spec.ts já existe e, caso contrário, gera um novo com uma estrutura inicial pronta. A ferramenta é projetada para agilizar o fluxo de trabalho, mantendo a padronização dos testes e economizando tempo.",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.94.0"
   },
   "publisher": "prophecyCore",
   "categories": [
-    "Other"
+    "Testing"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/prophecyCore/prophecy.git"
   },
+  "icon": "images/logo.png",
+  "license": "MIT",
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
